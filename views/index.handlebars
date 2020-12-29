@@ -1,1 +1,16 @@
-<h1>Here is a URL shortener</h1>
+<h1>短網址產生器</h1>
+<form action="/" method="POST">
+  <div class="input">
+    <label for="inputURL" class="form-label">請輸入你的網址</label>
+    <input type="text" class="form-control" id="inputURL" name="inputURL" placeholder="例如:http://www.google.com">
+  </div>
+  <div class="button">
+    <button type="submit">產生短網址</button>
+  </div>
+  {{#if newURL}}
+  <div>
+    <p>短網址產生成功!請用以下網址:</p>
+    <a href="{{newURL}}">{{newURL}}</p>
+  </div>
+  {{/if}}
+</form>
