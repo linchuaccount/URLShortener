@@ -1,5 +1,5 @@
 {
-  "name": "URL-shortener",
+  "name": "URLshortener",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "express-handlebars": "^5.2.0"
+    "express-handlebars": "^5.2.0",
+    "mongoose": "^5.11.9"
   }
 }
