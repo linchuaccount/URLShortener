@@ -2,6 +2,7 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const Shortener = require('./models/URLshortener')
 const getRandomCode = require('./public/javascripts/getRandomCode')
 
 const app = express()
@@ -28,10 +29,12 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-  let newURL = 'www.localhost:3000'
-  newURL += getRandomCode()
-  console.log(newURL)
-  res.render('index', { newURL })
+  const randomURL = 'http://www.localhost:3000' + getRandomCode()
+  req.body.randomURL = randomURL
+  // console.log(req.body)
+  Shortener.create(req.body)
+    .then(() => res.redirect('index', { randomURL }))
+    .catch(error => console.log(error))
 })
 
 app.listen(PORT, () => {
