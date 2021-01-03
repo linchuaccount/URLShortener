@@ -24,16 +24,34 @@ db.once('open', () => {
   console.log('mongodb connected!')
 })
 
+//首頁連結
 app.get('/', (req, res) => {
   res.render('index')
 })
 
+//產生短網址並將資料存進MonogoDB
 app.post('/', (req, res) => {
-  const randomURL = 'http://www.localhost:3000' + getRandomCode()
-  req.body.randomURL = randomURL
+  const randomCode = getRandomCode()
+  req.body.randomCode = randomCode
+  const shortURL = 'http://www.localhost:3000' + randomCode
+  console.log(shortURL)
   // console.log(req.body)
   Shortener.create(req.body)
-    .then(() => res.redirect('index', { randomURL }))
+    .then(() => res.render('index', { shortURL }))
+    .catch(error => console.log(error))
+})
+
+// 導向短網址路由
+app.get('/:randomCode', (req, res) => {
+  const randomCode = '/'+ req.params.randomCode
+  console.log(randomCode)
+  return Shortener.find({"randomCode": `${randomCode}`})
+    .lean()
+    // .then( (shortURL) => console.log(shortURL[0].inputURL) )
+    .then( (shortURL) => {      
+      let inputURL = shortURL[0].inputURL
+      res.redirect(inputURL)
+      })
     .catch(error => console.log(error))
 })
 

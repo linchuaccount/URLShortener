@@ -5,7 +5,7 @@ const shortenerSchema = new Schema({
     type: String,
     required: true
   },
-  randomURL: {
+  randomCode: {
     type: String,
     required: true
   }
