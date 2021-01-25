@@ -3,9 +3,8 @@
     <h1>短網址產生器</h1>
   </div>
   <div class="col col-5 mx-auto mt-3 mb-4 px-auto">
-    <img
-      src="https://www.flaticon.com/svg/vstatic/svg/1106/1106123.svg?token=exp=1611561180~hmac=e651a7864936c235ec56b9d1639ef259"
-      alt="URL" width="250" height="250" class="mx-auto d-block">
+    <img src="https://www.flaticon.com/premium-icon/icons/svg/1078/1078403.svg" alt="URL" width="250" height="250"
+      class="mx-auto d-block">
   </div>
   <div class="col col-10 mx-auto">
     <form action="/" method="POST">
@@ -16,16 +15,16 @@
         <button class="btn btn-success" type="submit" id="button-addon2">按我產生短網址</button>
       </div>
       {{#if shortURL}}
-      <div class="card mb-3 mx-auto" style="width: 18rem;">
+      <div class="card mb-3 mx-auto" style="width: 22rem;">
         <div class="card-body text-center">
           <div>
-            <img
-              src="https://www.flaticon.com/svg/vstatic/svg/190/190411.svg?token=exp=1611570056~hmac=c26c02aea4a7e927e957163b025acffb"
-              alt="tick" width="30" height="30" class="d-inline-block align-top">
-            <span style="display: inline-block; font-size:25px;">短網址產生成功!</span>
+            <span style="font-size: 2.5em; color: green;">
+              <i class="fas fa-check-circle"></i>
+            </span>
+            <span style="display: inline-block; font-size: 25px;">短網址產生成功!</span>
           </div>
           <span>請用以下網址:</span>
-          <a href="{{shortURL}}">{{shortURL}}</p>
+          <a href="{{shortURL}}" style="font-size: 20px;">{{shortURL}}</a>
         </div>
       </div>
       {{/if}}
