@@ -2,7 +2,7 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
-const Shortener = require('./models/URLshortener')
+const URLShortener = require('./models/URLShortener')
 const getRandomCode = require('./public/javascripts/getRandomCode')
 
 const app = express()
@@ -31,27 +31,42 @@ app.get('/', (req, res) => {
 
 //產生短網址並將資料存進MonogoDB
 app.post('/', (req, res) => {
-  const randomCode = getRandomCode()
-  req.body.randomCode = randomCode
-  const shortURL = 'http://www.localhost:3000' + randomCode
-  console.log(shortURL)
-  // console.log(req.body)
-  Shortener.create(req.body)
-    .then(() => res.render('index', { shortURL }))
-    .catch(error => console.log(error))
+  let shortURL = 'http://www.localhost:3000'
+
+  const { inputURL } = req.body
+  // console.log('1', inputURL)
+  URLShortener.findOne({ inputURL })
+    .lean()
+    .then(URLdata => {
+      // console.log('2', URLdata)
+      if (URLdata) {
+        shortURL += URLdata.randomCode
+        return res.render('index', { shortURL })
+      }
+      else {
+        let randomCode = getRandomCode()
+        req.body.randomCode = randomCode
+        shortURL += randomCode
+        // console.log(shortURL)
+        // console.log(req.body)
+        URLShortener.create({ inputURL, randomCode })
+          .then(() => res.render('index', { shortURL }))
+          .catch(error => console.log(error))
+      }
+    })
 })
 
 // 導向短網址路由
 app.get('/:randomCode', (req, res) => {
-  const randomCode = '/'+ req.params.randomCode
-  console.log(randomCode)
-  return Shortener.find({"randomCode": `${randomCode}`})
+  let randomCode = '/' + req.params.randomCode
+  // console.log(randomCode)
+  return URLShortener.find({ "randomCode": `${randomCode}` })
     .lean()
-    // .then( (shortURL) => console.log(shortURL[0].inputURL) )
-    .then( (shortURL) => {      
-      let inputURL = shortURL[0].inputURL
+    .then((URLdata) => {
+      // console.log(URLdata)
+      let inputURL = URLdata[0].inputURL
       res.redirect(inputURL)
-      })
+    })
     .catch(error => console.log(error))
 })
 
