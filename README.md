@@ -1,8 +1,8 @@
-#短網址產生器 URL Shortener
+# 短網址產生器 URL Shortener
 
 可以輸入一個網址，將長度縮短
 
-![URLShortener image]()
+![URLShortener_image](https://github.com/linchuaccount/URLShortener/blob/master/mainpage.JPG)
 
 ## 環境需求
 
