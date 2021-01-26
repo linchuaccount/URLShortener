@@ -4,6 +4,10 @@
 
 ![URLShortener_image](https://github.com/linchuaccount/URLShortener/blob/master/mainpage.JPG)
 
+## Heroku 網址
+
+https://whispering-plains-26015.herokuapp.com/  
+
 ## 環境需求
 
 node.js v10.15.0  
