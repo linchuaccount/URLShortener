@@ -12,7 +12,8 @@ router.get('/', (req, res) => {
 
 //產生短網址並將資料存進MonogoDB
 router.post('/', (req, res) => {
-  let shortURL = 'http://www.' + req.headers.host
+  let shortURL = req.protocol + '://' + req.headers.host
+
   const { inputURL } = req.body
   // console.log('1', inputURL, typeof inputURL)
   URLShortener.findOne({ inputURL })
@@ -25,13 +26,17 @@ router.post('/', (req, res) => {
       }
       else {
         let randomCode = getRandomCode()
-        req.body.randomCode = randomCode
-        shortURL += randomCode
-        // console.log(shortURL)
-        // console.log(req.body)
-        URLShortener.create({ inputURL, randomCode })
-          .then(() => res.render('index', { shortURL }))
-          .catch(error => console.log(error))
+        URLShortener.find({ 'randomCode': randomCode })
+          .lean()
+          .then(codeData => {
+            while (codeData.find(code => code === randomCode)) {
+              randomCode = getRandomCode()
+            }
+            shortURL += randomCode
+            URLShortener.create({ inputURL, randomCode })
+              .then(() => res.render('index', { shortURL }))
+              .catch(error => console.log(error))
+          })
       }
     })
 })
