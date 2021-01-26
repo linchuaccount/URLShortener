@@ -6,7 +6,9 @@ const routes = require('./routes')
 require('./config/mongoose')
 
 const app = express()
-const PORT = 3000
+
+// 如果在 Heroku 環境則使用 process.env.PORT
+const PORT = process.env.PORT || 3000
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
