@@ -14,20 +14,31 @@
           required>
         <button class="btn btn-success" type="submit" id="button-addon2">按我產生短網址</button>
       </div>
-      {{#if shortURL}}
-      <div class="card mb-3 mx-auto" style="width: 22rem;">
-        <div class="card-body text-center">
-          <div>
-            <span style="font-size: 2.5em; color: green;">
-              <i class="fas fa-check-circle"></i>
-            </span>
-            <span style="display: inline-block; font-size: 25px;">短網址產生成功!</span>
-          </div>
-          <span>請用以下網址:</span>
-          <a href="{{shortURL}}" style="font-size: 20px;">{{shortURL}}</a>
-        </div>
-      </div>
-      {{/if}}
+
     </form>
+    {{#if shortURL}}
+    <div class="card mb-3 mx-auto" style="width: 22rem;">
+      <div class="card-body text-center">
+        <div>
+          <span style="font-size: 2.5em; color: green;">
+            <i class="fas fa-check-circle"></i>
+          </span>
+          <span style="display: inline-block; font-size: 25px;">短網址產生成功!</span>
+        </div>
+        <span>請用以下網址:</span>
+        <a href="{{shortURL}}" style="font-size: 20px;" id="copy">{{shortURL}}</a>
+        <button type="button" onclick="copyEvent('copy')">點我複製網址</button>
+        <script>
+          function copyEvent(id) {
+            let str = document.getElementById(id);
+            window.getSelection().selectAllChildren(str);
+            document.execCommand("Copy")
+          }   
+        </script>
+      </div>
+    </div>
+
+    {{/if}}
+
   </div>
 </div>
